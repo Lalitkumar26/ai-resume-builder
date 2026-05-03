@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ResumeBot AI - Build Your Perfect Resume</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <p class="loading-text" id="loadingText">Loading...</p>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <i class="fas fa-file-alt"></i>
+      <span>Resume AI</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#" id="navHowItWorks">How It Works</a></li>
+      <li><a href="#" id="navTemplates">Templates</a></li>
+      <li><a href="#" id="navTestimonials">Reviews</a></li>
+      <li><a href="#" id="navFaq">FAQ</a></li>
+    </ul>
+    <div class="nav-actions" id="navActions">
+      <button class="btn btn-outline btn-sm" onclick="window.location.href='login.html'">Login</button>
+      <button class="btn btn-primary btn-sm" onclick="window.location.href='signup.html'">Sign Up</button>
+    </div>
+    <div class="user-nav" id="userNav" style="display:none;">
+      <div class="user-avatar" id="userAvatar">U</div>
+      <span id="userNameNav" style="font-size:0.93rem;font-weight:600;"></span>
+      <button class="btn btn-outline btn-sm" id="logoutBtn">Logout</button>
+    </div>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<!-- MOBILE MENU - Updated -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#" id="mobileHowItWorks">How It Works</a>
+  <a href="#" id="mobileTemplates">Templates</a>
+  <a href="#" id="mobileTestimonials">Reviews</a>
+  <a href="#" id="mobileFaq">FAQ</a>
+  <div class="mobile-actions">
+    <button class="btn btn-outline btn-sm" onclick="window.location.href='login.html'">Login</button>
+    <button class="btn btn-primary btn-sm" onclick="window.location.href='signup.html'">Sign Up</button>
+  </div>
+  <!-- Mobile user nav will be inserted here dynamically when logged in -->
+</div>
+
+<!-- HERO SECTION -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <span class="badge"><i class="fas fa-robot"></i> AI-Powered Resume Builder</span>
+        <h1 class="hero-title">Build Your <span class="green">Perfect Resume</span> in Minutes</h1>
+        <p class="hero-desc">Create professional, ATS-friendly resumes with the power of AI. Choose from beautiful templates, get AI-powered content suggestions, and land your dream job faster.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary btn-lg" id="startCreatingBtn"><i class="fas fa-rocket"></i> Start Creating Resume</button>
+          <button class="btn btn-outline btn-lg" id="viewTemplatesBtn"><i class="fas fa-eye"></i> View Templates</button>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><div class="stat-num">50K+</div><div class="stat-label">Resumes Built</div></div>
+          <div class="stat"><div class="stat-num">95%</div><div class="stat-label">Success Rate</div></div>
+          <div class="stat"><div class="stat-num">3</div><div class="stat-label">Templates</div></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div class="hero-ai-badge"><i class="fas fa-magic"></i> AI Generated</div>
+          <div class="hero-card-header">
+            <div class="hero-avatar">JD</div>
+            <div>
+              <div class="hero-card-name">John Doe</div>
+              <div class="hero-card-title">Senior Software Engineer</div>
+            </div>
+          </div>
+          <div class="hero-skill-bar">
+            <div class="hero-skill-label"><span>JavaScript</span><span>95%</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:95%"></div></div>
+          </div>
+          <div class="hero-skill-bar">
+            <div class="hero-skill-label"><span>Python</span><span>85%</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:85%"></div></div>
+          </div>
+          <div class="hero-skill-bar">
+            <div class="hero-skill-label"><span>React</span><span>90%</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:90%"></div></div>
+          </div>
+          <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);">
+            <div style="font-size:0.78rem;color:var(--text-light);margin-bottom:6px;font-weight:600;">PROFESSIONAL SUMMARY</div>
+            <div style="font-size:0.82rem;color:var(--text-mid);line-height:1.6;">Experienced software engineer with 5+ years building scalable web applications...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how-section" id="how-it-works">
+  <div class="container">
+    <span class="badge">Simple Process</span>
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-subtitle">Create your professional resume in 4 easy steps with our AI-powered builder.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-icon"><i class="fas fa-user-circle"></i></div>
+        <h3 class="step-title">Create Account</h3>
+        <p class="step-desc">Sign up for free and create your personal account to save and manage your resumes securely.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-icon"><i class="fas fa-palette"></i></div>
+        <h3 class="step-title">Choose Template</h3>
+        <p class="step-desc">Browse our professionally designed templates and pick the one that matches your style and industry.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-icon"><i class="fas fa-robot"></i></div>
+        <h3 class="step-title">Add Info with AI</h3>
+        <p class="step-desc">Fill in your details and let our AI assist you in writing compelling, professional content that stands out.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-icon"><i class="fas fa-download"></i></div>
+        <h3 class="step-title">Download PDF</h3>
+        <p class="step-desc">Preview your resume in real-time and download it as a high-quality PDF ready to send to employers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEMPLATES SECTION -->
+<section class="section templates-section" id="templates">
+  <div class="container">
+    <span class="badge">Resume Templates</span>
+    <h2 class="section-title">Choose Your Template</h2>
+    <p class="section-subtitle">Pick from our professionally designed templates, each crafted to make a lasting impression.</p>
+    <div class="templates-grid">
+      <!-- Template 1: Classic -->
+      <div class="template-card">
+        <div class="template-preview classic">
+          <div class="mini-resume">
+            <div class="mini-resume-header">
+              <div class="mini-resume-name">John Doe</div>
+              <div class="mini-resume-role">Software Engineer</div>
+            </div>
+            <div class="mini-resume-section">
+              <div class="mini-resume-section-title">Experience</div>
+              <div class="mini-line"></div>
+              <div class="mini-line short"></div>
+              <div class="mini-line medium"></div>
+            </div>
+            <div class="mini-resume-section">
+              <div class="mini-resume-section-title">Education</div>
+              <div class="mini-line"></div>
+              <div class="mini-line short"></div>
+            </div>
+            <div class="mini-resume-section">
+              <div class="mini-resume-section-title">Skills</div>
+              <div class="mini-line medium"></div>
+            </div>
+          </div>
+        </div>
+        <div class="template-info">
+          <div class="template-name">Classic Professional</div>
+          <div class="template-desc">Traditional and ATS-friendly design. Perfect for corporate roles.</div>
+          <button class="btn btn-primary btn-block use-template-btn" data-template="classic"><i class="fas fa-arrow-right"></i> Use This Template</button>
+        </div>
+      </div>
+      <!-- Template 2: Modern -->
+      <div class="template-card">
+        <div class="template-preview modern">
+          <div class="mini-resume modern-style">
+            <div class="modern-sidebar">
+              <div class="mini-resume-name" style="font-size:0.65rem;color:#fff;">John Doe</div>
+              <div style="font-size:0.5rem;color:rgba(255,255,255,0.7);margin-bottom:6px;">Developer</div>
+              <div class="mini-line" style="background:rgba(255,255,255,0.3);"></div>
+              <div class="mini-line short" style="background:rgba(255,255,255,0.3);"></div>
+              <div class="mini-line medium" style="background:rgba(255,255,255,0.3);"></div>
+            </div>
+            <div class="modern-main">
+              <div class="mini-resume-section">
+                <div class="mini-resume-section-title">Experience</div>
+                <div class="mini-line"></div>
+                <div class="mini-line short"></div>
+              </div>
+              <div class="mini-resume-section">
+                <div class="mini-resume-section-title">Education</div>
+                <div class="mini-line medium"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="template-info">
+          <div class="template-name">Modern Sidebar</div>
+          <div class="template-desc">Contemporary two-column layout with a bold sidebar design.</div>
+          <button class="btn btn-primary btn-block use-template-btn" data-template="modern"><i class="fas fa-arrow-right"></i> Use This Template</button>
+        </div>
+      </div>
+      <!-- Template 3: Creative -->
+      <div class="template-card">
+        <div class="template-preview creative">
+          <div class="mini-resume creative-style">
+            <div class="mini-resume-header">
+              <div class="mini-resume-name">John Doe</div>
+              <div class="mini-resume-role">Creative Designer</div>
+            </div>
+            <div class="mini-resume-section">
+              <div class="mini-resume-section-title">Summary</div>
+              <div class="mini-line"></div>
+              <div class="mini-line medium"></div>
+            </div>
+            <div class="mini-resume-section">
+              <div class="mini-resume-section-title">Experience</div>
+              <div class="mini-line"></div>
+              <div class="mini-line short"></div>
+            </div>
+          </div>
+        </div>
+        <div class="template-info">
+          <div class="template-name">Creative Bold</div>
+          <div class="template-desc">Vibrant and eye-catching design for creative professionals.</div>
+          <button class="btn btn-primary btn-block use-template-btn" data-template="creative"><i class="fas fa-arrow-right"></i> Use This Template</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section testimonials-section" id="testimonials">
+  <div class="container">
+    <span class="badge">What People Say</span>
+    <h2 class="section-title">Success Stories</h2>
+    <p class="section-subtitle">Thousands of job seekers have landed their dream jobs using ResumeAI.</p>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"ResumeAI helped me land my dream job at a top tech company. The AI suggestions were incredibly accurate and professional. I got 3 interview calls within a week!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">SM</div>
+          <div>
+            <div class="author-name">Sarah Mitchell</div>
+            <div class="author-role">Software Engineer at Google</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"The live preview feature is amazing! I could see exactly how my resume looked as I typed. The templates are clean, modern, and professional. Highly recommend!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">RK</div>
+          <div>
+            <div class="author-name">Rahul Kumar</div>
+            <div class="author-role">Product Manager at Amazon</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"As a fresh graduate, I had no idea how to write a resume. ResumeAI's AI feature helped me create a compelling resume that got me hired within 2 weeks. Amazing tool!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">EA</div>
+          <div>
+            <div class="author-name">Emily Anderson</div>
+            <div class="author-role">UX Designer at Meta</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="section faq-section" id="faq">
+  <div class="container">
+    <span class="badge">Got Questions?</span>
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <p class="section-subtitle">Everything you need to know about ResumeAI.</p>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Is ResumeAI free to use?</span>
+          <span class="faq-icon"><i class="fas fa-plus"></i></span>
+        </div>
+        <div class="faq-answer">Yes! ResumeAI is completely free to use. You can create, edit, and download your resume without any cost. We believe everyone deserves access to professional resume-building tools.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>How does the AI feature work?</span>
+          <span class="faq-icon"><i class="fas fa-plus"></i></span>
+        </div>
+        <div class="faq-answer">Our AI uses advanced language models (powered by Google Gemini) to analyze your job title, experience, and skills to generate professional, tailored content for your resume. It can write summaries, enhance job descriptions, and suggest relevant skills based on your career field.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Can I download my resume as a PDF?</span>
+          <span class="faq-icon"><i class="fas fa-plus"></i></span>
+        </div>
+        <div class="faq-answer">Absolutely! Once you're happy with your resume, simply click the "Download PDF" button in the builder page. Your resume will be instantly converted to a high-quality PDF file that you can send directly to employers.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Are the resume templates ATS-friendly?</span>
+          <span class="faq-icon"><i class="fas fa-plus"></i></span>
+        </div>
+        <div class="faq-answer">Yes! All our templates, especially the Classic Professional template, are designed to be ATS (Applicant Tracking System) friendly. They use clean formatting, proper headings, and standard fonts to ensure your resume passes through ATS systems successfully.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Is my data secure?</span>
+          <span class="faq-icon"><i class="fas fa-plus"></i></span>
+        </div>
+        <div class="faq-answer">Your privacy and security are our top priority. All data is stored securely using Firebase with industry-standard encryption. Your resume data is private and only accessible by you. We never share your personal information with third parties.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Can I switch templates after building my resume?</span>
+          <span class="faq-icon"><i class="fas fa-plus"></i></span>
+        </div>
+        <div class="faq-answer">Yes! You can switch between our templates at any time in the builder page without losing any of your data. Simply click on the template buttons in the preview panel and your content will automatically reformat to the new template.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section">
+  <div class="container">
+    <h2 class="section-title">Ready to Land Your Dream Job?</h2>
+    <p class="section-subtitle">Join thousands of professionals who've already built their perfect resume with ResumeAI.</p>
+    <button class="btn btn-white btn-lg" id="ctaStartBtn"><i class="fas fa-rocket"></i> Start Building for Free</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo"><i class="fas fa-file-alt"></i> ResumeAI</div>
+        <p>Build professional resumes with the power of AI. Fast, easy, and free. Land your dream job with a resume that stands out.</p>
+        <div class="footer-social">
+          <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#how-it-works" class="footer-link-how">How It Works</a></li>
+          <li><a href="#templates" class="footer-link-templates">Templates</a></li>
+          <li><a href="#faq" class="footer-link-faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Career Tips</a></li>
+          <li><a href="#">Resume Guide</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 ResumeAI. All rights reserved.</p>
+      <p>Made with <span style="color:var(--primary)">♥</span> for job seekers worldwide</p>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

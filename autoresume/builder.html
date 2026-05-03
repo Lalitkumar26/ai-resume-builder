@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume Builder - ResumeAI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <link rel="stylesheet" href="css/style.css" />
+  
+
+
+</head>
+<body>
+
+<div class="toast-container" id="toastContainer"></div>
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <p class="loading-text" id="loadingText">Loading...</p>
+</div>
+
+<!-- Builder Page -->
+<div class="builder-page active">
+  <!-- Builder Navbar -->
+  <div class="builder-navbar">
+    <div class="builder-logo" onclick="window.location.href='index.html'">
+      <i class="fas fa-file-alt"></i> ResumeAI
+    </div>
+    <div class="builder-actions">
+      <span id="autoSaveStatus" style="font-size:0.82rem;color:var(--text-light);"><i class="fas fa-cloud"></i> All changes saved</span>
+      <button class="btn btn-outline btn-sm" id="downloadPdfBtn"><i class="fas fa-download"></i> Download PDF</button>
+      <button class="btn btn-primary btn-sm" id="builderLogoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </div>
+  </div>
+
+  <!-- Mobile Tabs -->
+  <div class="builder-tabs" id="builderTabs">
+    <button class="builder-tab-btn active" data-tab="form"><i class="fas fa-edit"></i> Edit</button>
+    <button class="builder-tab-btn" data-tab="preview"><i class="fas fa-eye"></i> Preview</button>
+  </div>
+
+  <!-- Builder Body -->
+  <div class="builder-body" id="builderBody">
+    <!-- LEFT: Form Panel -->
+    <div class="form-panel mobile-active" id="formPanel">
+      <div class="form-header">
+        <h2><i class="fas fa-edit" style="color:var(--primary);margin-right:6px;"></i>Resume Information</h2>
+        <p>Fill in your details to build your resume</p>
+        <div class="progress-bar-wrap">
+          <div class="progress-label"><span>Profile Completion</span><span id="progressPct">0%</span></div>
+          <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="form-sections">
+        <!-- Personal Info -->
+        <div class="form-accordion">
+          <div class="accordion-header open">
+            <div class="accordion-title"><i class="fas fa-user"></i> Personal Information</div>
+            <i class="fas fa-chevron-down accordion-chevron"></i>
+          </div>
+          <div class="accordion-body open">
+            <div class="form-row">
+              <div class="builder-form-group">
+                <label class="builder-label">First Name *</label>
+                <input type="text" class="builder-input" id="f_firstName" placeholder="John" />
+              </div>
+              <div class="builder-form-group">
+                <label class="builder-label">Last Name *</label>
+                <input type="text" class="builder-input" id="f_lastName" placeholder="Doe" />
+              </div>
+            </div>
+            <div class="builder-form-group">
+              <label class="builder-label">Job Title / Role *</label>
+              <input type="text" class="builder-input" id="f_jobTitle" placeholder="e.g. Software Engineer" />
+            </div>
+            <div class="form-row">
+              <div class="builder-form-group">
+                <label class="builder-label">Email *</label>
+                <input type="email" class="builder-input" id="f_email" placeholder="john@example.com" />
+              </div>
+              <div class="builder-form-group">
+                <label class="builder-label">Phone</label>
+                <input type="tel" class="builder-input" id="f_phone" placeholder="+1 234 567 890" />
+              </div>
+            </div>
+            <div class="builder-form-group">
+              <label class="builder-label">Location</label>
+              <input type="text" class="builder-input" id="f_location" placeholder="City, Country" />
+            </div>
+            <div class="form-row">
+              <div class="builder-form-group">
+                <label class="builder-label">LinkedIn</label>
+                <input type="text" class="builder-input" id="f_linkedin" placeholder="linkedin.com/in/johndoe" />
+              </div>
+              <div class="builder-form-group">
+                <label class="builder-label">Website / Portfolio</label>
+                <input type="text" class="builder-input" id="f_website" placeholder="johndoe.dev" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="form-accordion">
+          <div class="accordion-header">
+            <div class="accordion-title"><i class="fas fa-align-left"></i> Professional Summary</div>
+            <i class="fas fa-chevron-down accordion-chevron"></i>
+          </div>
+          <div class="accordion-body">
+            <div class="builder-form-group">
+              <label class="builder-label">Summary</label>
+              <textarea class="builder-input builder-textarea" id="f_summary" placeholder="Write a brief professional summary..."></textarea>
+            </div>
+            <button class="ai-btn" id="aiSummaryBtn">
+              <i class="fas fa-magic"></i>
+              <span id="aiSummaryBtnText">✨ AI Generate Summary</span>
+              <i class="fas fa-spinner ai-loading" id="aiSummaryLoader"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Experience -->
+        <div class="form-accordion">
+          <div class="accordion-header">
+            <div class="accordion-title"><i class="fas fa-briefcase"></i> Work Experience</div>
+            <i class="fas fa-chevron-down accordion-chevron"></i>
+          </div>
+          <div class="accordion-body">
+            <div id="experienceList"></div>
+            <button class="add-entry-btn" id="addExperienceBtn"><i class="fas fa-plus"></i> Add Experience</button>
+          </div>
+        </div>
+
+        <!-- Education -->
+        <div class="form-accordion">
+          <div class="accordion-header">
+            <div class="accordion-title"><i class="fas fa-graduation-cap"></i> Education</div>
+            <i class="fas fa-chevron-down accordion-chevron"></i>
+          </div>
+          <div class="accordion-body">
+            <div id="educationList"></div>
+            <button class="add-entry-btn" id="addEducationBtn"><i class="fas fa-plus"></i> Add Education</button>
+          </div>
+        </div>
+
+        <!-- Skills -->
+        <div class="form-accordion">
+          <div class="accordion-header">
+            <div class="accordion-title"><i class="fas fa-star"></i> Skills</div>
+            <i class="fas fa-chevron-down accordion-chevron"></i>
+          </div>
+          <div class="accordion-body">
+            <div class="skills-container" id="skillsList"></div>
+            <div class="skill-input-row">
+              <input type="text" class="builder-input" id="skillInput" placeholder="e.g. JavaScript" />
+              <button class="btn btn-primary btn-sm" id="addSkillBtn"><i class="fas fa-plus"></i></button>
+            </div>
+            <button class="ai-btn" id="aiSkillsBtn">
+              <i class="fas fa-magic"></i>
+              <span id="aiSkillsBtnText">✨ AI Suggest Skills</span>
+              <i class="fas fa-spinner ai-loading" id="aiSkillsLoader"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Projects -->
+        <div class="form-accordion">
+          <div class="accordion-header">
+            <div class="accordion-title"><i class="fas fa-code"></i> Projects</div>
+            <i class="fas fa-chevron-down accordion-chevron"></i>
+          </div>
+          <div class="accordion-body">
+            <div id="projectsList"></div>
+            <button class="add-entry-btn" id="addProjectBtn"><i class="fas fa-plus"></i> Add Project</button>
+          </div>
+        </div>
+
+        <!-- Certifications -->
+        <div class="form-accordion">
+          <div class="accordion-header">
+            <div class="accordion-title"><i class="fas fa-certificate"></i> Certifications</div>
+            <i class="fas fa-chevron-down accordion-chevron"></i>
+          </div>
+          <div class="accordion-body">
+            <div id="certificationsList"></div>
+            <button class="add-entry-btn" id="addCertificationBtn"><i class="fas fa-plus"></i> Add Certification</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Preview Panel -->
+    <div class="preview-panel" id="previewPanel">
+      <div class="preview-toolbar">
+        <span><i class="fas fa-eye" style="color:var(--primary);margin-right:5px;"></i>Live Preview</span>
+        <div class="template-switcher">
+          <button class="tpl-btn active" data-template="classic">Classic</button>
+          <button class="tpl-btn" data-template="modern">Modern</button>
+          <button class="tpl-btn" data-template="creative">Creative</button>
+        </div>
+      </div>
+      <div class="resume-wrapper" id="resumePreview"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Resume Color Changer -->
+<div class="resume-color-picker-container">
+  <button class="resume-color-toggle-btn" id="resumeColorToggleBtn">
+    <i class="fas fa-palette"></i>
+  </button>
+  <div class="resume-color-panel" id="resumeColorPanel">
+    <h4><i class="fas fa-paint-bucket"></i> Resume Theme Color</h4>
+    <div class="resume-color-options" id="resumeColorOptions">
+      <div class="resume-color-option active" style="background: #16a34a;" data-color="#16a34a" title="Green"></div>
+      <div class="resume-color-option" style="background: #2563eb;" data-color="#2563eb" title="Blue"></div>
+      <div class="resume-color-option" style="background: #dc2626;" data-color="#dc2626" title="Red"></div>
+      <div class="resume-color-option" style="background: #7c3aed;" data-color="#7c3aed" title="Purple"></div>
+      <div class="resume-color-option" style="background: #ea580c;" data-color="#ea580c" title="Orange"></div>
+      <div class="resume-color-option" style="background: #0891b2;" data-color="#0891b2" title="Cyan"></div>
+      <div class="resume-color-option" style="background: #db2777;" data-color="#db2777" title="Pink"></div>
+      <div class="resume-color-option" style="background: #65a30d;" data-color="#65a30d" title="Lime"></div>
+      <div class="resume-color-option" style="background: #9333ea;" data-color="#9333ea" title="Violet"></div>
+      <div class="resume-color-option" style="background: #f97316;" data-color="#f97316" title="Amber"></div>
+    </div>
+    <div class="resume-custom-color">
+      <label><i class="fas fa-eyedropper"></i> Custom Color</label>
+      <input type="color" id="resumeCustomColorPicker" value="#16a34a">
+    </div>
+    <button class="resume-reset-color-btn" id="resetColorBtn">
+      <i class="fas fa-undo-alt"></i> Reset to Default Green
+    </button>
+  </div>
+</div>
+
+<script type="module" src="js/builder.js"></script>
+</body>
+</html>
