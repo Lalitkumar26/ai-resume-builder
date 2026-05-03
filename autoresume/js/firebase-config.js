@@ -19,5 +19,5 @@ export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
 
 // Gemini API Config
-export const GEMINI_API_KEY = "AIzaSyDRr0EDU5236AB1uy2YsDDXChmHJo7fpVU";
+export const GEMINI_API_KEY = "your_new_api_key_here";
 export const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
