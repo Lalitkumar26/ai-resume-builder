@@ -517,15 +517,6 @@ function switchTemplate(tpl, btn) {
 }
 
 // ===================== PDF DOWNLOAD =====================
-
-// ===================== PDF DOWNLOAD WITH PERFECT PAGE MARGINS =====================
-// ===================== PDF DOWNLOAD WITH PROPER 4-SIDE MARGINS =====================
-// ===================== PDF DOWNLOAD - DIRECT DOWNLOAD WITH PROPER MARGINS =====================
-// ===================== PDF DOWNLOAD - SIRF PAGE BREAK KE LIYE MARGIN =====================
-// ===================== PDF DOWNLOAD - FIRST PAGE BOTTOM + SECOND PAGE TOP MARGIN =====================
-// ===================== PDF DOWNLOAD - SMART PAGE BREAK =====================
-// ===================== PDF DOWNLOAD - PERFECT PAGE BREAK =====================
-// ===================== PDF DOWNLOAD - SIMPLE (DEFAULT HTML2PDF) =====================
 function downloadPDF() {
   const firstName = document.getElementById('f_firstName')?.value || '';
   const lastName = document.getElementById('f_lastName')?.value || '';
